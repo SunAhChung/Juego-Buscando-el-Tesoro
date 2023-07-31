@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1
+        style="color:rgb(21, 42, 1); 
+        font-family: Franklin Gothic Medium;
+        font-size: 80px;
+        "
+    >Buscando el tesoro escondido</h1>
+        
+    <img src="./mapa mas chico.jpg" alt="" id="mapa"">
+   <p 
+    style="color: rgb(58, 40, 1);
+    font-family: Franklin Gothic Medium;
+    font-size: 50px;"
+   id="distancia"></p>
+   <script>
+        let mapa=document.getElementById('mapa')
+        let p=document.getElementById('distancia')
+        let numeroAzar=(valor)=> Math.floor((Math.random()*valor))
+        let ancho=1024
+        let alto=471
+        let tesoro={
+            x:numeroAzar(ancho),
+            y:numeroAzar(alto),
+        }
+        let traerDistancia=(event,tesoro)=>{
+            let diferenciaX=event.offsetX-tesoro.x
+            let diferenciaY=event.offsetY-tesoro.y
+            return Math.sqrt((diferenciaX*diferenciaX)+(diferenciaY*diferenciaY))
+        } 
+        let traerAyuda=distancia=>{
+            if (distancia<20) {
+                return 'Quemando'
+
+            } else if(distancia<50){
+                return 'Muy caliente'
+            } 
+            else if(distancia<100){
+                return 'Caliente'
+            } else if(distancia<250){
+                return 'Tibio'
+        
+            }
+            else if(distancia>200){
+                return 'Frio'
+            }
+        }
+        let click=0
+        mapa.addEventListener('click',()=>{
+            click++
+            let distancia=traerDistancia(event,tesoro)
+            let ayuda=traerAyuda(distancia)
+            p.innerHTML=ayuda
+            if (distancia<15) {
+                alert('Encontraste el tesoro en ' + click + ' clicks')
+            }
+        })
+    </script>
+</body>
+</html>
